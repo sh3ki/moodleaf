@@ -11,16 +11,47 @@ class AppLogo extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('🌿', style: TextStyle(fontSize: size * 0.75)),
+        Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.14),
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          padding: EdgeInsets.all(size * 0.08),
+          child: Image.asset(
+            'assets/images/moodleaf logo.png',
+            fit: BoxFit.contain,
+          ),
+        ),
         if (showText) ...[
-          const SizedBox(width: 8),
+          const SizedBox(width: 10),
           RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(text: 'Mood', style: TextStyle(fontSize: size * 0.5, fontWeight: FontWeight.w800, color: AppTheme.primary)),
-                TextSpan(text: 'Leaf', style: TextStyle(fontSize: size * 0.5, fontWeight: FontWeight.w800, color: AppTheme.secondary)),
-              ],
-            ),
+            text: TextSpan(children: [
+              TextSpan(
+                text: 'Mood',
+                style: TextStyle(
+                  fontSize: size * 0.44,
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.primary,
+                ),
+              ),
+              TextSpan(
+                text: 'Leaf',
+                style: TextStyle(
+                  fontSize: size * 0.44,
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.secondary,
+                ),
+              ),
+            ]),
           ),
         ],
       ],
