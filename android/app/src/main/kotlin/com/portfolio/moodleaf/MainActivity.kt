@@ -1,4 +1,4 @@
-package com.portfolio.moodleaf
+package com.moodleaf.app
 
 import io.flutter.embedding.android.FlutterActivity
 
