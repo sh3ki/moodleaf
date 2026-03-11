@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class MoodEntry {
   final String id;
   final int mood; // 1–5
@@ -13,9 +15,9 @@ class MoodEntry {
     required this.timestamp,
   });
 
-  String get emoji {
-    const map = {5: '😄', 4: '🙂', 3: '😐', 2: '😔', 1: '😢'};
-    return map[mood] ?? '😐';
+  IconData get icon {
+    const map = {5: Icons.sentiment_very_satisfied_rounded, 4: Icons.sentiment_satisfied_rounded, 3: Icons.sentiment_neutral_rounded, 2: Icons.sentiment_dissatisfied_rounded, 1: Icons.sentiment_very_dissatisfied_rounded};
+    return map[mood] ?? Icons.sentiment_neutral_rounded;
   }
 
   String get label {
