@@ -22,8 +22,9 @@ class _LogMoodScreenState extends State<LogMoodScreen> {
   void _submit() {
     if (_selectedMood == null) return;
     setState(() => _logged = true);
+    final label = AppTheme.moodLabels[_selectedMood!] ?? 'Okay';
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Mood logged! ${AppTheme.moodEmojis[_selectedMood!]}'), backgroundColor: AppTheme.primary, behavior: SnackBarBehavior.floating),
+      SnackBar(content: Text('Mood logged: $label'), backgroundColor: AppTheme.primary, behavior: SnackBarBehavior.floating),
     );
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) setState(() { _logged = false; _selectedMood = null; _selectedTags.clear(); _noteCtrl.clear(); });
@@ -38,29 +39,30 @@ class _LogMoodScreenState extends State<LogMoodScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Text('How are you feeling right now?', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
+          const Text('How are you feeling right now?', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppTheme.textPrimary)),
           const SizedBox(height: 16),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [5, 4, 3, 2, 1].map((m) => Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 3),
               child: MoodBubble(mood: m, selected: _selectedMood == m, onTap: () => setState(() => _selectedMood = m)),
             ),
           )).toList()),
           const SizedBox(height: 24),
-          const Text('What\'s on your mind?', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+          const Text('What\'s on your mind?', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppTheme.textPrimary)),
           const SizedBox(height: 10),
           TextField(
             controller: _noteCtrl,
             maxLines: 4,
             decoration: InputDecoration(
               hintText: 'Write a note (optional)...',
+              hintStyle: const TextStyle(color: AppTheme.textSecondary),
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none),
             ),
           ),
           const SizedBox(height: 24),
-          const Text('Add Tags', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+          const Text('Add Tags', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppTheme.textPrimary)),
           const SizedBox(height: 10),
           Wrap(spacing: 8, runSpacing: 8, children: kMoodTags.map((tag) {
             final sel = _selectedTags.contains(tag);
@@ -70,11 +72,11 @@ class _LogMoodScreenState extends State<LogMoodScreen> {
                 duration: const Duration(milliseconds: 200),
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 decoration: BoxDecoration(
-                  color: sel ? AppTheme.primary : Colors.white,
+                  color: sel ? AppTheme.secondary : Colors.white,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: sel ? AppTheme.primary : Colors.grey.shade200),
+                  border: Border.all(color: sel ? AppTheme.secondary : AppTheme.divider),
                 ),
-                child: Text(tag, style: TextStyle(color: sel ? Colors.white : Colors.black87, fontWeight: FontWeight.w600, fontSize: 13)),
+                child: Text(tag, style: TextStyle(color: sel ? Colors.white : AppTheme.textPrimary, fontWeight: FontWeight.w600, fontSize: 13)),
               ),
             );
           }).toList()),
@@ -89,7 +91,7 @@ class _LogMoodScreenState extends State<LogMoodScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               ),
-              child: Text(_logged ? 'Logged! ${AppTheme.moodEmojis[_selectedMood ?? 3]}' : 'Save Mood', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+              child: Text(_logged ? 'Logged!' : 'Save Mood', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
             ),
           ),
           const SizedBox(height: 20),
